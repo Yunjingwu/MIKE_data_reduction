@@ -12,7 +12,7 @@ It is needed to change the `IFLT` to `TFLT`.
 #### 1.2 `IDL> mike_editstrct, mike` is used to modify the MIKE structure.
 
 This step can help to mask bad images and further to check labels for each images. 
-Labels are need in few of next steps. (Important!)
+Labels are need in few of next steps. **(Important!)**
 
 We only need the red-channel observations. Thus, `IDL> mike.setup = 1` helps to set all of the images as label **1**. 
 
@@ -21,9 +21,20 @@ Further, it is need to add tags for sources. The source j0757m0002 is labelled a
 
 #### 1.3 `IDL> mike_wrstrct, mike, FITS='Mike_test.fits'` is used to write the MIKE structure to disk.
 
-We can save all of the modifications to the fits file. `IDL> mike = mike_ar('Mike_test.fits')` will read the MIKE structure.
+We can save all of the modifications to the fits file. `IDL> mike = mike_ar('Mike_test.fits')` will re-load the MIKE structure.
+`IDL> help, mike, /str` will help to confirm whether this code works.
 
 
-### 1. Initial Setup
+### 2. Calibrations
+
+#### 2.1 Bias subtraction (Useless)
+
+In the MIKE reduction pipeline, bias subtraction is abandoned. Thus, we do not generate a bias frame.
+
+#### 2.2 Gain Calibration
+
+In the MIKE reduction pipeline, bias subtraction is abandoned. Thus, we do not generate a bias frame.
+
+
 
 
