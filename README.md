@@ -33,8 +33,42 @@ In the MIKE reduction pipeline, bias subtraction is abandoned. Thus, we do not g
 
 #### 2.2 Gain Calibration
 
-In the MIKE reduction pipeline, bias subtraction is abandoned. Thus, we do not generate a bias frame.
+Some published gain values may not be appropriate for a given set of observations. 
+`IDL> mike_setgain, mike, setup, [side]` setup is setted in ***step 1.2***. [side] == 2 represents the red channel.
+`IDL> mike_setgain, mike, 1, 2`
 
+
+#### 2.3 Generate Flats `mike_allflat` or splitted scripts
+
+***This step requires `PS_Open`.***  Open it before generating the flat field.
+
+`IDL> mike_mkmflat, mike, setup, [side], [/SMOOTH]` creates a stacked, normalized milky flat to correct pixel response variations.
+If one's milky flats have many absorption features in them (not recommended), then one should call this routine with the /SMOOTH keyword.
+`IDL> mike_mkmflat, mike, 1, 2`, `xatv, 'Flats/Flat_R_01_M.fits.gz'` helps to check the output flat field.
+
+`IDL> mike_mktflat, mike, setup, [side]` combines the series of trace flats to create one high S/N image for order and slit tracing. 
+`IDL> mike_mktflat, mike, 1, 2`. Then check the Trace Flat, `IDL> xatv, 'Flats/Flat_B_01_T.fits'`.
+
+`IDL> mike_edgeflat, mike, setup, [side], /INTER, /CHK` trace the trace flat created above to determine the order curvature, and return a smooth fit.
+`IDL> mike_edgeflat, mike, 1, 2, /INTER, /CHK`. Then check the edge `IDL> mike_chktrcflat, mike, 1, 2, /NOSTOP, /FIT`.
+
+### 3. Arc Images 
+
+`IDL> mike_allarc, mike, setup, [side]` Process all together. This is recommended If you are reducing a full night of data.
+`IDL> mike_allarc, mike, 1, 2, /CLOBBER` ***NO mike.arc***
+
+
+### 4. Slit Profile
+`IDL> mike_slitflat, mike, setup, [side], [/chk]` determines the slit profile for each order. 
+`IDL> mike_slitflat, mike, 1, 2, /chk, /clobber`
+
+### 5. Extract spectra 
+`IDL> mike_allobj, mike, setup, obj_id, side, [exp], /PROCALL` includes processing, CR rejection, tracing, sky subtraction and extraction. 
+(multiple exposures of single object will be reduced together)
+
+`IDL> mike_allobj, mike, 1, 1, 2, /procall`, `mike_allobj, mike, 1, 2, 2, /procall, /nocr` ***error***
+
+`IDL> mike_proc, mike, SETUP=1, OBJ=1, /CLOBBER`-> `IDL> mike_objcr, mike, 1, 1, 2, /NOCHK`-> `mike_fntobj, mike, 1, 1, 2, /CHK`
 
 
 
