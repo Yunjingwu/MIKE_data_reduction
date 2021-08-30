@@ -47,7 +47,7 @@ If one's milky flats have many absorption features in them (not recommended), th
 `IDL> mike_mkmflat, mike, 1, 2`, `xatv, 'Flats/Flat_R_01_M.fits.gz'` helps to check the output flat field.
 
 `IDL> mike_mktflat, mike, setup, [side]` combines the series of trace flats to create one high S/N image for order and slit tracing. 
-`IDL> mike_mktflat, mike, 1, 2`. Then check the Trace Flat, `IDL> xatv, 'Flats/Flat_B_01_T.fits'`.
+`IDL> mike_mktflat, mike, 1, 2`. Then check the Trace Flat, `IDL> xatv, 'Flats/Flat_R_01_T.fits'`.
 
 `IDL> mike_edgeflat, mike, setup, [side], /INTER, /CHK` trace the trace flat created above to determine the order curvature, and return a smooth fit.
 `IDL> mike_edgeflat, mike, 1, 2, /INTER, /CHK`. Then check the edge `IDL> mike_chktrcflat, mike, 1, 2, /NOSTOP, /FIT`.
@@ -56,6 +56,14 @@ If one's milky flats have many absorption features in them (not recommended), th
 
 `IDL> mike_allarc, mike, setup, [side]` Process all together. This is recommended If you are reducing a full night of data.
 `IDL> mike_allarc, mike, 1, 2, /CLOBBER` ***NO mike.arc***
+
+#### 3.1  measure the curvature of the arc lines
+`IDL> mike_setarcm, raw_fil, setup, side`
+`IDL> mike_setarcm, 'Raw/r0002.fits', 1, 2`, `mike_setarcm, 'Raw/r0003.fits', 1, 2`, `mike_setarcm, 'Raw/r0004.fits', 1, 2`, `mike_setarcm, 'Raw/r0029.fits', 1, 2`, `mike_setarcm, 'Raw/r0030.fits', 1, 2`, `mike_setarcm, 'Raw/r0033.fits', 1, 2`, `mike_setarcm, 'Raw/r0034.fits', 1, 2`, `mike_setarcm, 'Raw/r0039.fits', 1, 2`, `mike_setarcm, 'Raw/r0041.fits', 1, 2`, `mike_setarcm, 'Raw/r0044.fits', 1, 2`
+
+#### 3.2  Process the Arcs. This step contains bias subtractions and flat fields the arc images (red side no bias subtraction?).
+`IDL> mike_procarc, name, setup, obj_id, side`
+
 
 
 ### 4. Slit Profile
