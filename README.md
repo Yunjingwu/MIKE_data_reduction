@@ -57,12 +57,19 @@ If one's milky flats have many absorption features in them (not recommended), th
 `IDL> mike_allarc, mike, setup, [side]` Process all together. This is recommended If you are reducing a full night of data.
 `IDL> mike_allarc, mike, 1, 2, /CLOBBER` ***NO mike.arc***
 
+<!-- 
 #### 3.1  measure the curvature of the arc lines
 `IDL> mike_setarcm, raw_fil, setup, side`
 `IDL> mike_setarcm, 'Raw/r0002.fits', 1, 2`, `mike_setarcm, 'Raw/r0003.fits', 1, 2`, `mike_setarcm, 'Raw/r0004.fits', 1, 2`, `mike_setarcm, 'Raw/r0029.fits', 1, 2`, `mike_setarcm, 'Raw/r0030.fits', 1, 2`, `mike_setarcm, 'Raw/r0033.fits', 1, 2`, `mike_setarcm, 'Raw/r0034.fits', 1, 2`, `mike_setarcm, 'Raw/r0039.fits', 1, 2`, `mike_setarcm, 'Raw/r0041.fits', 1, 2`, `mike_setarcm, 'Raw/r0044.fits', 1, 2`
 
 #### 3.2  Process the Arcs. This step contains bias subtractions and flat fields the arc images (red side no bias subtraction?).
 `IDL> mike_procarc, name, setup, obj_id, side`
+
+#### 3.3 xxxxx
+`IDL> mike_arcalign, mike, 1, 2, /CHK`
+
+#### 3.4 xxxx
+`IDL> mike_fitarc, mike, 1, 1, 2, /INTER, /PINTER, /PSOUT` -->
 
 
 
@@ -76,7 +83,12 @@ If one's milky flats have many absorption features in them (not recommended), th
 
 `IDL> mike_allobj, mike, 1, 1, 2, /procall`, `mike_allobj, mike, 1, 2, 2, /procall, /nocr` ***error***
 
-`IDL> mike_proc, mike, SETUP=1, OBJ=1, /CLOBBER`-> `IDL> mike_objcr, mike, 1, 1, 2, /NOCHK`-> `mike_fntobj, mike, 1, 1, 2, /CHK`
+`IDL> mike_proc, mike, SETUP=1, OBJ=1, /CLOBBER`-> `IDL> mike_objcr, mike, 1, 1, 2, /NOCHK`-> `mike.arc_img = 'Arcs/Arc_mr0002I.fits.gz' (Should set an arc file)` -> `mike_fntobj, mike, 1, 1, 2, /CHK` -> `mike_skysub, mike, 1, 1, 2, /FCHK`
 
 
+### 6. Combine
+`IDL> mike_combspec, mike, setup, obj_id, side`
+`IDL> mike_combspec, mike, 1, 1, 2, /NOFLUX`
 
+### 7. 2d to 1d 
+`IDL> mike_1dspec, mike, 1, 1, 2`
