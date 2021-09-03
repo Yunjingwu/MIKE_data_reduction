@@ -72,7 +72,6 @@ If one's milky flats have many absorption features in them (not recommended), th
 `IDL> mike_fitarc, mike, 1, 1, 2, /INTER, /PINTER, /PSOUT` -->
 
 
-
 ### 4. Slit Profile
 `IDL> mike_slitflat, mike, setup, [side], [/chk]` determines the slit profile for each order. 
 `IDL> mike_slitflat, mike, 1, 2, /chk, /clobber`
@@ -86,9 +85,17 @@ If one's milky flats have many absorption features in them (not recommended), th
 `IDL> mike_proc, mike, SETUP=1, OBJ=1, /CLOBBER`-> `IDL> mike_objcr, mike, 1, 1, 2, /NOCHK`-> `mike.arc_img = 'Arcs/Arc_mr0002I.fits.gz' (Should set an arc file)` -> `mike_fntobj, mike, 1, 1, 2, /CHK` -> `mike_skysub, mike, 1, 1, 2, /FCHK`
 
 
-### 6. Combine
+### 6. STD
+`mike_proc, mike, 39, /STD, /CLOBBER (Should set an index)` ->  `mike_fntobj, mike, 1, 2, 2, /STD` -> `mike_skysub, mike, 1, 38, 2, /STD, /CHK` & `mike_skysub, mike, 1, 39, 2, /STD, /CHK` -> `mike_box, mike, 1, 2, 2, /STD, /CHK, /SKIPSKYSUB` -> `mike_calibstd, mike, 38, ESOFIL='fltt3218.dat`
+
+### 7. fluxing 
+mike_flux, mike, 1, 38, 2, FLUXFIL='Extract/Sens_mr0042.idl', /STD
+mike_flux, mike, 1, 39, 2, FLUXFIL='Extract/Sens_mr0043.idl', /STD
+mike_flux, mike, 1, 1, 2, FLUXFIL='Extract/Sens_mr0043.idl'
+
+### 7. Combine
 `IDL> mike_combspec, mike, setup, obj_id, side`
 `IDL> mike_combspec, mike, 1, 1, 2, /NOFLUX`
 
-### 7. 2d to 1d 
-`IDL> mike_1dspec, mike, 1, 1, 2`
+### 8. 2d to 1d 
+`IDL> mike_1dspec, mike, 1, 1, 2, /CHK`
