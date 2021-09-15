@@ -99,3 +99,14 @@ mike_flux, mike, 1, 1, 2, FLUXFIL='Extract/Sens_mr0043.idl'
 
 ### 8. 2d to 1d 
 `IDL> mike_1dspec, mike, 1, 1, 2, /CHK`
+
+
+# CarPy data reduction:
+Venus:
+`alias carpy='env -i PS1="(carpy) $PS1" bash --noprofile --init-file /home/wuyj/data/Softwares/Carpy/CarPy/Setup.bash'`
+
+`mikesetup -db blueMIKE.db -blue -all -mk Makefile -lampkey arc -flatkey flat -orderkey milkyflat -slitblue falt -lampblue arc`
+
+`mikesetup -db redMIKE.db -red -all -mk Makefile -lampkey arc -flatkey milkyflat -orderkey flat`
+
+`mikesetup -db bias_subtractedMIKE.db -red -all -mk Makefile -lampkey arc -flatkey milkyflat -orderkey flat`
