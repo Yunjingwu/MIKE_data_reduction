@@ -1,6 +1,6 @@
 # MIKE_data_reduction
 
-## Here's the notes of MIKE reduciton
+## Here're the notes of MIKE reduciton
 
 ### 0. Install related code:
 Here're the installation steps of some related code. 
